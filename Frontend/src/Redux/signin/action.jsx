@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export const AUTH_START = "AUTH_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT = "LOGOUT";
@@ -33,13 +34,13 @@ export const authFailure = (error) => ({
 });
 
 // Register
-export const registerUser = (userData) => {
+export const registerUser = (users) => {
   return async (dispatch) => {
     dispatch({ type: REGISTER_USER });
     try {
-      const existingUsers = await axios.get("https://naykaclone-2azxn0wey-quazi-fahims-projects.vercel.app/users/register");
+      const existingUsers = await axios.get("https://nayka-backend-7whp.onrender.com/users/register");
       const userExists = existingUsers.data.some(
-        (user) => user.email === userData.email
+        (user) => user.email === users.email
       );
 
       if (userExists) {
@@ -50,7 +51,7 @@ export const registerUser = (userData) => {
         return;
       }
 
-      const res = await axios.post("https://naykaclone-2azxn0wey-quazi-fahims-projects.vercel.app/users/register", userData);
+      const res = await axios.post("https://nayka-backend-7whp.onrender.com/users/register", users);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: res.data });
     } catch (error) {
       dispatch({ type: REGISTER_USER_ERROR, payload: error.message });
@@ -63,7 +64,7 @@ export const signInUser = (userData) => {
   return async (dispatch) => {
     dispatch({ type: SIGN_IN_USER });
     try {
-      const existingUsers = await axios.get("https://naykaclone-2azxn0wey-quazi-fahims-projects.vercel.app/users/login");
+      const existingUsers = await axios.get("https://nayka-backend-7whp.onrender.com/users/login");
       const user = existingUsers.data.find(
         (u) => u.email === userData.email && u.password === userData.password
       );
