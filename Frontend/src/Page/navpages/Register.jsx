@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signInUser } from "../../Redux/signin/action";
+import { registerUser } from "../../Redux/signin/action";
 
 
-const Signin = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const handleSignIn = () => {
-    dispatch(signInUser({ email, password }));
+  const handleRegister = () => {
+    dispatch(registerUser({ email, password }));
   };
 
   return (
@@ -27,11 +27,11 @@ const Signin = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleSignIn}>Sign In</button>
+      <button onClick={handleRegister}>Register</button>
       {auth.loading && <p>Loading...</p>}
       {auth.error && <p style={{ color: "red" }}>{auth.error}</p>}
     </div>
   );
 };
 
-export default Signin;
+export default Register;

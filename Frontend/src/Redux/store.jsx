@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, legacy_createStore}from "redux"
 import {thunk}from "redux-thunk";
 import{logger} from "redux-logger"
+import authReducer from "./signin/reducer";
 
 
 
@@ -9,7 +10,7 @@ import{logger} from "redux-logger"
 
 
 export const rootreducer=combineReducers({
- 
+   auth: authReducer,
 })
 
 

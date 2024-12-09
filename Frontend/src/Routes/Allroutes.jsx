@@ -9,6 +9,7 @@ import Beautyadvice from '../Page/navpages/Beautyadvice'
 import Signin from '../Page/navpages/Signin'
 import Cart from '../Page/navpages/Cart'
 import Home from '../Page/mainpage/Home'
+import Register from '../Page/navpages/Register'
 
 const Allroutes = () => {
   return (
@@ -22,6 +23,7 @@ const Allroutes = () => {
 <Route path='/beautyadvice' element={<Beautyadvice/>}/>
 
 <Route path='/signin' element={<Signin/>}/>
+<Route path='/register' element={<Register/>}/>
 <Route path='/cart' element={<Cart/>}/>
    </Routes>
    </div>
