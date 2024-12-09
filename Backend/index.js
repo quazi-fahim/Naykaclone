@@ -4,9 +4,7 @@ const app=express();
 const connect=require("./config/db")
 const cors = require("cors");
 const userRouter=require("./Controller/User.routes");
-app.use(cors({
-    origin: process.env.FRONTEND_URL
-}))
+app.use(cors())
 
 
 app.use(express.json());

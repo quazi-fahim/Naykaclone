@@ -9,7 +9,7 @@ const checkAccess = require("../Middleware/Checkacess");
 const blacklist = require("../blacklist");
 
 // Get all users -> Only admin
-router.get("/", auth,checkAccess, async (req, res) => {
+router.get("/", auth,checkAccess(["Admin"]), async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
