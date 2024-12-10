@@ -34,13 +34,13 @@ export const authFailure = (error) => ({
 });
 
 // Register
-export const registerUser = (users) => {
+export const registerUser = (userData) => {
   return async (dispatch) => {
     dispatch({ type: REGISTER_USER });
     try {
       const existingUsers = await axios.get("https://nayka-backend-7whp.onrender.com/users/register");
-      const userExists = existingUsers.data.some(
-        (user) => user.email === users.email
+      const userExists = existingUsers.users.some(
+        (user) => user.email === userData.email
       );
 
       if (userExists) {
@@ -51,7 +51,7 @@ export const registerUser = (users) => {
         return;
       }
 
-      const res = await axios.post("https://nayka-backend-7whp.onrender.com/users/register", users);
+      const res = await axios.post("https://nayka-backend-7whp.onrender.com/users/register", userData);
       dispatch({ type: REGISTER_USER_SUCCESS, payload: res.data });
     } catch (error) {
       dispatch({ type: REGISTER_USER_ERROR, payload: error.message });
@@ -65,7 +65,7 @@ export const signInUser = (userData) => {
     dispatch({ type: SIGN_IN_USER });
     try {
       const existingUsers = await axios.get("https://nayka-backend-7whp.onrender.com/users/login");
-      const user = existingUsers.data.find(
+      const user = existingUsers.users.find(
         (u) => u.email === userData.email && u.password === userData.password
       );
 
