@@ -6,7 +6,7 @@ import { register } from '../../Redux/signin/action';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-  const [data, setData] = useState({ name: '', email: '', password: '' });
+  const [data, setData] = useState({ name: '', email: '', password: '',role:'' });
   const dispatch = useDispatch();
   const { isLoading, error, successMessage } = useSelector((state) => state);
   const navigate = useNavigate();
@@ -53,6 +53,14 @@ const Register = () => {
           name="password"
           placeholder="Enter Password"
           value={data.password}
+          onChange={handleInputChange}
+        />
+          
+          <Input
+          type="role"
+          name="role"
+          placeholder="Enter role"
+          value={data.role}
           onChange={handleInputChange}
         />
     
