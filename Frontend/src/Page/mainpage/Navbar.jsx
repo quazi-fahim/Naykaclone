@@ -26,8 +26,9 @@ const Navbar = () => {
       padding="0 20px"  // Add padding to avoid content touching the edges
       height="60px"  // Set a fixed height for consistency
       display="flex"  // Use flex layout for positioning child elements
-      justifyContent="space-between"  // Space between logo, nav links, and buttons
+      justifyContent="center"  // Space between logo, nav links, and buttons
       alignItems="center"  // Vertically center the items in the navbar
+      gap="25px"
     >
       {/* Logo */}
       <Link to="/" _hover={{ textDecoration: "none" }}>
