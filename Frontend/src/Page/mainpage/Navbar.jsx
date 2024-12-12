@@ -46,7 +46,7 @@ const Navbar = () => {
 
       {/* Navbar Links */}
       <Flex align="center" gap="20px" display={{ base: "none", md: "flex" }}>
-        <Link _hover={{ textDecoration: "none", color:"#FF93BC" }} to="/categories">Categories</Link>
+        <Link _hover={{ textDecoration: "none", color:"#FF93BC" }} to="/">Categories</Link>
         <Link _hover={{ textDecoration: "none", color:"#FF93BC" }} to='/brand'>Brand</Link>
         <Link _hover={{ textDecoration: "none", color:"#FF93BC" }} to="/luxe">Luxe</Link>
         <Link _hover={{ textDecoration: "none", color:"#FF93BC" }} to="/naykafashion">Naykaa Fashion</Link>
