@@ -1,176 +1,117 @@
-import React, { useState } from 'react';
-import { Box, Center, IconButton, useBreakpointValue } from '@chakra-ui/react';
+import React, { useRef } from 'react';
 import Slider from 'react-slick';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import { Box, Image, IconButton } from '@chakra-ui/react';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // import arrow icons
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
+const Firstslider = () => {
+  const sliderRef = useRef(null);
 
-// Settings for the slider
-const settings = (currentSlide) => ({
-    dots: true,
-    arrows: false,
+  const sliderSettings = {
     infinite: true,
-    autoplay: true,
-    speed: 300,
-    autoplaySpeed: 3000,
-    slidesToShow: 3, // Show 3 slides at a time
-    slidesToScroll: 1, // Scroll one slide at a time
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: false, // Disable default arrows because we are using custom ones
+    focusOnSelect: true,
     responsive: [
       {
-        breakpoint: 1024, // For tablets
+        breakpoint: 768,
         settings: {
-          slidesToShow: 2, // Show 2 slides on medium screens
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768, // For mobile devices
-        settings: {
-          slidesToShow: 1, // Show 1 slide on small screens
-          slidesToScroll: 1,
+          slidesToShow: 1,
         },
       },
     ],
-    appendDots: (dots) => (
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '10px',
-          left: '10px',
-        }}
-      >
-        <ul style={{ margin: '0px', display: 'flex', justifyContent: 'flex-end' }}>
-          {dots}
-        </ul>
-      </div>
-    ),
-    customPaging: (i) => (
-      <div
-        style={{
-          width: '10px',
-          height: '10px',
-          borderRadius: '50%',
-          backgroundColor: '#fff',
-          margin: '5px',
-          opacity: currentSlide === i ? 1 : 0.4,
-          transition: 'opacity 0.3s ease',
-        }}
-      />
-    ),
-  });
-  
-
-export default function Firstslider() {
-  const [slider, setSlider] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0);  // State to track the current slide
-
-  // Use breakpoints for top and side positions
-  const top = useBreakpointValue({ base: '90%', md: '60%' });
-  const side = useBreakpointValue({ base: '10px', md: '30px' });
-
-  // Responsive height for the slider container
-  const sliderHeight = useBreakpointValue({ base: '300px', md: '350px', lg: '600px' });
-
-  // Image cards used in the slider
-  const cards = [
-    { url: "", searchParams: { id: 1 }, image: 'https://www.bunnycart.com/pub/media/wysiwyg/smartwave/home/Free_Delivery_Aquatic_Plants.jpg' },
-    { url: "", searchParams: { id: 2 }, image: 'https://www.bunnycart.com/pub/media/wysiwyg/smartwave/home/Bunnycart_s_Live_Arrival_Guarantee.jpg' },
-    { url: "", searchParams: { id: 3 }, image: 'https://www.bunnycart.com/pub/media/wysiwyg/smartwave/home/Aquatic_Plants_Discounts.jpg' },
-    { url: "", searchParams: { id: 4 }, image: 'https://www.bunnycart.com/pub/media/wysiwyg/smartwave/home/Pack_of_10_Assorted_Aquatic_Plants.jpg' },
-
-  ];
-
-  // Handle after slide change to update the current slide
-  const handleAfterChange = (index) => {
-    setCurrentSlide(index);
   };
 
-  // Handle image click to navigate to the corresponding slide
-  const handleImageClick = (index) => {
-    slider?.slickGoTo(index);
+  const goToPrev = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickPrev();
+    }
+  };
+
+  const goToNext = () => {
+    if (sliderRef.current) {
+      sliderRef.current.slickNext();
+    }
   };
 
   return (
-    <Center>
-      <Box
-        position={'relative'}
-        m={{ base: '10px', md: '20px' }}
-        height={sliderHeight}
-        width={'85%'}
-        overflow={'hidden'}
-      >
-        {/* CSS files for react-slick */}
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+    <Box bg={'green.100'}>
+      <Box bg={'green.100'}  margin="50px" padding="20px" position="relative">
+      {/* Slider Component with custom ref */}
+      <Slider ref={sliderRef} {...sliderSettings}>
+        {/* Slide 1 */}
+        <Box w="300px" h="300px" padding="10px" boxShadow="md" borderRadius="10px" bg="white">
+          <Image 
+            src="https://via.placeholder.com/300x200" 
+            alt="Makeup Bestsellers"
+            borderRadius="10px"
+            objectFit="cover"
+            boxSize="100%" // Ensures the image fills the box size
+          />
+        </Box>
+
+        {/* Slide 2 */}
+        <Box w="300px" h="300px" padding="10px" boxShadow="md" borderRadius="10px" bg="white">
+          <Image 
+            src="https://via.placeholder.com/300x200" 
+            alt="Skin Care"
+            borderRadius="10px"
+            objectFit="cover"
+            boxSize="100%" // Ensures the image fills the box size
+          />
+        </Box>
+
+        {/* Slide 3 */}
+        <Box w="300px" h="300px" padding="10px" boxShadow="md" borderRadius="10px" bg="white">
+          <Image 
+            src="https://via.placeholder.com/300x200" 
+            alt="Hair Care"
+            borderRadius="10px"
+            objectFit="cover"
+            boxSize="100%" // Ensures the image fills the box size
+          />
+        </Box>
+      </Slider>
+
+      {/* Custom Left Arrow */}
+      <Box position="absolute" top="50%" left="0" transform="translateY(-50%)">
+        <IconButton 
+          icon={<FaArrowLeft />} 
+          aria-label="Previous Slide" 
+          variant="outline" 
+          colorScheme="teal" 
+          onClick={goToPrev}
+          backgroundColor="white" 
+          borderRadius="50%" 
+          size="lg" 
+          padding="10px"
+          boxShadow="md" 
+          _hover={{ backgroundColor: 'gray.100' }}
         />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-        />
-
-        {/* Left Icon */}
-        <IconButton
-          borderRadius="full"
-          position="absolute"
-          left={side}
-          top={top}
-          transform={'translate(20%, -50%)'}
-          zIndex={2}
-          bg="white"
-          color="black"
-          opacity={0.6}
-          _hover={{ opacity: 1 }}
-          onClick={() => slider?.slickPrev()}
-        >
-          <AiOutlineLeft size={28} /> 
-        </IconButton>
-
-        {/* Right Icon */}
-        <IconButton
-          borderRadius="full"
-          position="absolute"
-          right={side}
-          top={top}
-          transform={'translate(-20%, -50%)'}
-          zIndex={2}
-          bg="white"
-          color="black"
-          opacity={0.6}
-          _hover={{ opacity: 1 }}
-          onClick={() => slider?.slickNext()}
-          
-        >
-         <AiOutlineRight size={28} /> 
-        </IconButton>
-
-        {/* Slider */}
-        <Slider
-          {...settings(currentSlide)}
-          ref={(slider) => setSlider(slider)}
-          afterChange={handleAfterChange}  // Update the current slide index after each slide change
-        >
-          {cards.map((card, index) => (
-            <Box
-              key={index}
-              height={sliderHeight} // Responsive height for the images
-              position="relative"
-              backgroundPosition="center"
-              backgroundRepeat="no-repeat"
-              backgroundSize="contain"// Ensure the image fully fits in the box and resizes responsively
-              backgroundImage={`url(${card.image})`} // Use the image property from the card object
-              width="100%" // Ensure the image takes up full width of the box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              onClick={() => handleImageClick(index)} // Handle image click
-            >
-              {/* Optional: You can add any overlay or text here */}
-            </Box>
-          ))}
-        </Slider>
       </Box>
-    </Center>
+
+      {/* Custom Right Arrow */}
+      <Box position="absolute" top="50%" right="0" transform="translateY(-50%)">
+        <IconButton 
+          icon={<FaArrowRight />} 
+          aria-label="Next Slide" 
+          variant="outline" 
+          colorScheme="black" 
+          onClick={goToNext}
+          backgroundColor="white" 
+          borderRadius="50%" 
+          size="lg" 
+          padding="10px"
+          boxShadow="md" 
+          _hover={{ backgroundColor: 'gray.100' }}
+        />
+      </Box>
+    </Box>
+    </Box>
   );
-}
+};
+
+export default Firstslider;

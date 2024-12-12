@@ -1,85 +1,81 @@
-import axios from "axios";
+
+import axios from 'axios';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
+export const LOGOUT = 'LOGOUT'; 
 
 
-export const AUTH_START = "AUTH_START";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGOUT = "LOGOUT";
-export const AUTH_FAILURE = "AUTH_FAILURE";
-export const REGISTER_USER = "REGISTER_USER";
-export const REGISTER_USER_SUCCESS = "REGISTER_USER_SUCCESS";
-export const REGISTER_USER_ERROR = "REGISTER_USER_ERROR";
-export const SIGN_IN_USER = "SIGN_IN_USER";
-export const SIGN_IN_USER_SUCCESS = "SIGN_IN_USER_SUCCESS";
-export const SIGN_IN_USER_ERROR = "SIGN_IN_USER_ERROR";
-
-// Auth Start
-export const authStart = () => ({
-  type: AUTH_START,
+// Login Action Creators
+export const loginRequest = () => ({
+  type: LOGIN_REQUEST,
 });
 
-// Login
-export const loginSuccess = (user) => ({
+export const loginSuccess = (userData) => ({
   type: LOGIN_SUCCESS,
-  payload: user,
+  payload: userData,
 });
 
-export const logout = () => ({
-  type: LOGOUT,
-});
-
-// Auth Failure
-export const authFailure = (error) => ({
-  type: AUTH_FAILURE,
+export const loginFailure = (error) => ({
+  type: LOGIN_FAILURE,
   payload: error,
 });
 
-// Register
-export const registerUser = (userData) => {
-  return async (dispatch) => {
-    dispatch({ type: REGISTER_USER });
-    try {
-      const existingUsers = await axios.get("https://nayka-backend-7whp.onrender.com/users/register");
-      const userExists = existingUsers.users.some(
-        (user) => user.email === userData.email
-      );
-
-      if (userExists) {
-        dispatch({
-          type: REGISTER_USER_ERROR,
-          payload: "User already exists. Please log in.",
-        });
-        return;
-      }
-
-      const res = await axios.post("https://nayka-backend-7whp.onrender.com/users/register", userData);
-      dispatch({ type: REGISTER_USER_SUCCESS, payload: res.data });
-    } catch (error) {
-      dispatch({ type: REGISTER_USER_ERROR, payload: error.message });
+export const login = (data) => async (dispatch) => {
+  dispatch(loginRequest());
+  try {
+    const response = await axios.post('https://nayka-backend-l0iw.onrender.com/users/signin', data);
+    if (response.status === 200) {
+      localStorage.setItem('token', response.data.accessToken);
+      localStorage.setItem('userId', response.data.userId);
+      dispatch(loginSuccess(response.data));
     }
-  };
+  } catch (err) {
+    dispatch(loginFailure(err.response?.data?.err || 'Login failed. Please try again.'));
+  }
 };
 
-// Sign In
-export const signInUser = (userData) => {
-  return async (dispatch) => {
-    dispatch({ type: SIGN_IN_USER });
-    try {
-      const existingUsers = await axios.get("https://nayka-backend-7whp.onrender.com/users/login");
-      const user = existingUsers.users.find(
-        (u) => u.email === userData.email && u.password === userData.password
-      );
+// Register Action Creators
+export const registerRequest = () => ({
+  type: REGISTER_REQUEST,
+});
 
-      if (!user) {
-        dispatch({
-          type: SIGN_IN_USER_ERROR,
-          payload: "Invalid credentials. Please try again.",
-        });
-        return;
-      }
+export const registerSuccess = (message) => ({
+  type: REGISTER_SUCCESS,
+  payload: message,
+});
 
-      dispatch({ type: SIGN_IN_USER_SUCCESS, payload: user });
-    } catch (error) {
-      dispatch({ type: SIGN_IN_USER_ERROR, payload: error.message });
+export const registerFailure = (error) => ({
+  type: REGISTER_FAILURE,
+  payload: error,
+});
+
+export const register = (data) => async (dispatch) => {
+  dispatch(registerRequest());
+  try {
+    const response = await axios.post(`https://nayka-backend-l0iw.onrender.com/users/register`, data);
+    if (response.status === 201) {
+      dispatch(registerSuccess('Registration successful! Please log in.'));
     }
+  } catch (err) {
+    dispatch(registerFailure(err.response?.data?.message || 'Registration failed. Please try again.'));
+  }
+};
+
+
+
+///logout
+export const logout = () => {
+  return (dispatch) => {
+    // Remove user data from localStorage
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+
+    // Dispatch the LOGOUT action
+    dispatch({ type: LOGOUT });
   };
 };

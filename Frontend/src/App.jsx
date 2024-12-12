@@ -1,6 +1,14 @@
 
+
 import {Provider} from "./components/ui/provider"
-import Allroutes from "./Routes/Allroutes"
+import Footer from "./Page/mainpage/Footer"
+import Navbar from "./Page/mainpage/Navbar"
+
+import Stickyhead from "./Page/mainpage/Stickyhead"
+import Categories from "./Page/navpages/Categories"
+import Allroute from "./Routes/Allroute"
+
+
 function App() {
   
 
@@ -8,7 +16,12 @@ function App() {
    
       <>
       <Provider>
-     <Allroutes/>
+      <Stickyhead/>
+      <Navbar/> 
+      <Categories/>
+      <Allroute/> 
+      <Footer/> 
+  
       </Provider>
       </>
    

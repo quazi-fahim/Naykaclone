@@ -1,65 +1,65 @@
-import { AUTH_START,LOGIN_SUCCESS,
-    LOGOUT,
-    AUTH_FAILURE,
-    REGISTER_USER,
-    REGISTER_USER_SUCCESS,
-    REGISTER_USER_ERROR,
-    SIGN_IN_USER,
-    SIGN_IN_USER_SUCCESS,
-    SIGN_IN_USER_ERROR,} from "./action";
+import { LOGIN_REQUEST,LOGIN_SUCCESS, LOGIN_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, LOGOUT} from "./action";
 
-  
-  const initialState = {
-    user: null,
-    loading: false,
-    error: null,
-    isAuthenticated: false,
-  };
-  
-  const authReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case AUTH_START:
-      case REGISTER_USER:
-      case SIGN_IN_USER:
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      case LOGIN_SUCCESS:
-      case SIGN_IN_USER_SUCCESS:
-        return {
-          ...state,
-          user: action.payload,
-          loading: false,
-          isAuthenticated: true,
-          error: null,
-        };
-      case REGISTER_USER_SUCCESS:
-        return {
-          ...state,
-          user: action.payload,
-          loading: false,
-          error: null,
-        };
+
+const initialState = {
+  isLoading: false,
+  isLoggedIn: false,
+  user: null,
+  error: null,
+  successMessage: '',
+};
+
+// Reducer to handle login and registration states
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        isLoggedIn: true,
+        user: action.payload,
+        error: null,
+      };
+    case LOGIN_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        successMessage: action.payload,
+        error: null,
+      };
+    case REGISTER_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
       case LOGOUT:
         return {
           ...state,
-          user: null,
-          isAuthenticated: false,
+          user: null,  
+          error: null, 
+          message: '', 
+          isLoggedIn: false, 
         };
-      case AUTH_FAILURE:
-      case REGISTER_USER_ERROR:
-      case SIGN_IN_USER_ERROR:
-        return {
-          ...state,
-          loading: false,
-          error: action.payload,
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default authReducer;
-  
+    default:
+      return state;
+  }
+};
+
+export default authReducer;

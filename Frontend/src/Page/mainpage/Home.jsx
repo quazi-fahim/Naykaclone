@@ -1,7 +1,11 @@
 import React from 'react'
+
+import Firstslider from '../pageComponent/Firstslider'
 import Navbar from './Navbar'
 import Stickyhead from './Stickyhead'
-import Register from '../navpages/Register'
+import Secondslider from '../pageComponent/secondslider'
+
+
 
 
 
@@ -9,10 +13,9 @@ import Register from '../navpages/Register'
 const Home = () => {
   return (
     <div>
-     <Stickyhead/>
-      <Navbar/>
-      <br/>
-      <Register/>
+    
+      <Secondslider/>
+      <Firstslider />
    
     </div>
   )
